@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Tutoriel R - 3&nbsp; Statistique avec R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Part4-Ravance.html" rel="next">
+<link href="./Part2-InitR.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Part3-StatR.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistique avec R</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Tutoriel R</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Part1-Intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Démarrer avec R et découverte de RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Part2-InitR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Initiation au langage et objets de R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Part3-StatR.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistique avec R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Part4-Ravance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pour aller plus loin avec R et RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#lois-usuelles-de-probabilité" id="toc-lois-usuelles-de-probabilité" class="nav-link active" data-scroll-target="#lois-usuelles-de-probabilité"><span class="header-section-number">3.1</span> Lois usuelles de probabilité</a></li>
+  <li><a href="#statistiques-descriptives" id="toc-statistiques-descriptives" class="nav-link" data-scroll-target="#statistiques-descriptives"><span class="header-section-number">3.2</span> Statistiques descriptives</a>
+  <ul class="collapse">
+  <li><a href="#contenu-du-jeu-de-données" id="toc-contenu-du-jeu-de-données" class="nav-link" data-scroll-target="#contenu-du-jeu-de-données"><span class="header-section-number">3.2.1</span> Contenu du jeu de données</a></li>
+  <li><a href="#statistiques-descriptives-unidimensionnelles" id="toc-statistiques-descriptives-unidimensionnelles" class="nav-link" data-scroll-target="#statistiques-descriptives-unidimensionnelles"><span class="header-section-number">3.2.2</span> Statistiques descriptives unidimensionnelles</a></li>
+  <li><a href="#statistiques-descriptives-bidimensionnelles" id="toc-statistiques-descriptives-bidimensionnelles" class="nav-link" data-scroll-target="#statistiques-descriptives-bidimensionnelles"><span class="header-section-number">3.2.3</span> Statistiques descriptives bidimensionnelles</a></li>
+  </ul></li>
+  <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin"><span class="header-section-number">3.3</span> Pour aller plus loin</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistique avec R</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="lois-usuelles-de-probabilité" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="lois-usuelles-de-probabilité"><span class="header-section-number">3.1</span> Lois usuelles de probabilité</h2>
+<!--
+Les disponibles avec densité, random, fdr, quantiles
+On peut en trouver des plus complexe dans des librairies spécifiques
+-->
+<p>De nombreuses distributions de probabilité sont disponibles sous R. En voici une liste non exhaustive :</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Table des lois usuelles sous R</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Loi</th>
+<th style="text-align: left;">NomR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Beta</td>
+<td style="text-align: left;">beta</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Binomiale</td>
+<td style="text-align: left;">binom</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cauchy</td>
+<td style="text-align: left;">cauchy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Khi-Deux</td>
+<td style="text-align: left;">chisq</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Exponentielle</td>
+<td style="text-align: left;">exp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fisher</td>
+<td style="text-align: left;">f</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gamma</td>
+<td style="text-align: left;">gamma</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Géométrique</td>
+<td style="text-align: left;">geom</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hypergéométrique</td>
+<td style="text-align: left;">hyper</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Log-Normale</td>
+<td style="text-align: left;">lnorm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Logistique</td>
+<td style="text-align: left;">logis</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Normale</td>
+<td style="text-align: left;">norm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poisson</td>
+<td style="text-align: left;">pois</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Student</td>
+<td style="text-align: left;">t</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Uniforme</td>
+<td style="text-align: left;">unif</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Weibull</td>
+<td style="text-align: left;">weibull</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Pour chaque distribution, quatre commandes préfixées par une des lettres <strong>d, p, q, r</strong> et suivi du nom de la distribution (<em>nomdist</em>) sont disponibles :<br>
+- d<em>nomdist</em> : fonction de densité <span class="math inline">\(f_X(.)\)</span> pour une loi continue ou fonction de probabilité <span class="math inline">\(\mathbb{P}(X = k)\)</span> pour une loi discrète<br>
+- p<em>nomdist</em> : fonction de répartition <span class="math inline">\(F_X(.) = \mathbb{P}(X\leq .)\)</span><br>
+- q<em>nomdist</em> : quantiles<br>
+- r<em>nomdist</em> : génère des réalisations aléatoires indépendantes de la distribution <em>nomdist</em>.</p>
+<p>Vous pouvez retrouver ces informations dans l’aide de R <code>?Distributions</code>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Exemple</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Exercice 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Exercice 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false">Correction</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<p>Soit <span class="math inline">\(X\)</span> une variable aléatoire de loi <span class="math inline">\(\mathcal{N}(0,1)\)</span>, alors</p>
+<ul>
+<li><code>dnorm(10)</code> évalue la valeur de la fonction densité en <span class="math inline">\(x=10\)</span> i.e <span class="math inline">\(f_X(10)\)</span></li>
+<li><code>pnorm(0)</code> évalue la valeur de la fonction de répartition en <span class="math inline">\(x=0\)</span> i.e <span class="math inline">\(F_X(0)=\mathbb{P}(X\leq 0)=\frac 1 2\)</span></li>
+<li><code>qnorm(0.95)</code> évalue le quantile à l’ordre <span class="math inline">\(0.95\)</span> de la loi normale <span class="math inline">\(\mathcal{N}(0,1)\)</span></li>
+<li><code>rnorm(10)</code> génère un un échantillon observé de taille <span class="math inline">\(10\)</span> pour la loi <span class="math inline">\(\mathcal{N}(0,1)\)</span></li>
+</ul>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<ol type="1">
+<li>Simuler un échantillon de taille 1000 suivant une loi normale <span class="math inline">\(\mathcal{N}(0,1)\)</span>.<br>
+</li>
+<li>Sur un même graphique, superposer la répartition empirique (histogramme) et la densité de la loi <span class="math inline">\(\mathcal{N}(0,1)\)</span>.<br>
+</li>
+<li>Sur un même graphique, superposer la fonction de répartition empirique et la fonction de répartition de la loi <span class="math inline">\(\mathcal{N}(0,1)\)</span>.</li>
+<li>Reprendre les questions précédentes avec d’autres lois de votre choix.</li>
+</ol>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<p>Illustration du Théorème de la limite centrale (TCL)</p>
+<ol type="1">
+<li>Générer <span class="math inline">\(N=10000\)</span> échantillons de taille <span class="math inline">\(n\)</span> (pour la loi de votre choix), pour différentes valeurs de <span class="math inline">\(n\)</span>.<br>
+</li>
+<li>A chaque fois, on prendra soin de faire apparaître sur un même graphique la répartition des <span class="math inline">\(N\)</span> moyennes empiriques (sous forme d’un histogramme) ainsi que la densité de la variable gaussienne limite associée.</li>
+</ol>
+</div>
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
+<p><strong>Exercice 1 :</strong></p>
+<ul>
+<li>Question 1 :</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Ech<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">1000</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Question 2 :</li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">ggplot()</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">plot()</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">Ech=</span>Ech), <span class="fu">aes</span>(<span class="at">x=</span>Ech)) <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),<span class="at">bins=</span><span class="dv">50</span>,<span class="at">fill=</span><span class="st">"white"</span>,<span class="at">colour=</span><span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="fu">aes</span>(<span class="at">x =</span> Ech),<span class="at">colour=</span><span class="st">"red"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(Ech,<span class="at">breaks=</span><span class="dv">50</span>,<span class="at">freq=</span>F)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>,<span class="fl">0.01</span>),<span class="fu">dnorm</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>,<span class="fl">0.01</span>)),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Question 3 :</li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">ggplot()</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">plot()</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">Ech=</span>Ech), <span class="fu">aes</span>(<span class="at">x=</span>Ech)) <span class="sc">+</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>(<span class="at">geom =</span> <span class="st">"step"</span>)<span class="sc">+</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> pnorm, <span class="fu">aes</span>(<span class="at">x =</span> Ech),<span class="at">colour=</span><span class="st">"red"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(Ech))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>,<span class="fl">0.01</span>),<span class="fu">pnorm</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>,<span class="fl">0.01</span>)),<span class="at">col=</span><span class="st">"red"</span>,<span class="at">type=</span><span class="st">'l'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Exercice 2 :</strong></p>
+<p>Enoncé du TLC : Soit <span class="math inline">\(X_1,\ldots,X_n\)</span> i.i.d d’espérance <span class="math inline">\(\mathbb{E}[X_1]&lt;+\infty\)</span> et variance <span class="math inline">\(Var(X_1)&lt;+\infty\)</span>. Alors <span class="math inline">\(\sqrt{n} \frac{\bar X_n - \mathbb{E}[X_1]}{\sqrt{Var(X_1)}} \underset{n\rightarrow +\infty}{\stackrel{\mathcal{L}}{\rightarrow}} \mathcal{N}(0,1).\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Illustration ici avec la loi de Bernoulli</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>p<span class="ot">=</span><span class="fl">0.4</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">1000</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>N<span class="ot">=</span><span class="dv">10000</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">rbinom</span>(n<span class="sc">*</span>N,<span class="at">size =</span> <span class="dv">1</span>,<span class="at">prob=</span>p),<span class="at">nrow=</span>N, <span class="at">ncol=</span>n)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>Xbar<span class="ot">=</span><span class="fu">apply</span>(X,<span class="dv">1</span>,mean)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>V<span class="ot">=</span><span class="fu">sqrt</span>(n)<span class="sc">*</span>(Xbar<span class="sc">-</span>p)<span class="sc">/</span><span class="fu">sqrt</span>(p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">ggplot()</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">plot()</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">Ech=</span>V), <span class="fu">aes</span>(<span class="at">x=</span>Ech)) <span class="sc">+</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),<span class="at">bins =</span> <span class="dv">30</span>,<span class="at">fill=</span><span class="st">"white"</span>,<span class="at">colour=</span><span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="fu">aes</span>(<span class="at">x =</span> Ech),<span class="at">colour=</span><span class="st">"red"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(V,<span class="at">breaks=</span><span class="dv">30</span>,<span class="at">freq=</span>F)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>,<span class="fl">0.01</span>),<span class="fu">dnorm</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>,<span class="fl">0.01</span>)),<span class="at">col=</span><span class="st">"red"</span>,<span class="at">type=</span><span class="st">"l"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="statistiques-descriptives" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="statistiques-descriptives"><span class="header-section-number">3.2</span> Statistiques descriptives</h2>
+<p>On va illustrer toute cette section à l’aide du jeu de données <strong>wine</strong> disponible dans <em>Data/wine.txt</em>. Ce jeu de données comprend des mesures physico-chimiques réalisées sur un échantillon de <span class="math inline">\(600\)</span> vins (rouges et blancs) du Portugal. Ces mesures sont complétées par une évaluation sensorielle de la qualité par un ensemble d’experts. Chaque vin est décrit par les variables suivantes :</p>
+<ul>
+<li><em>Qualite</em> : son évaluation sensorielle par les experts (“bad”,“medium”,“good”),</li>
+<li><em>Type</em> : son type (1 pour un vin rouge, 0 pour un vin blanc),</li>
+<li><em>AcidVol</em> : la teneur en acide volatile (en g/dm3 d’acide acétique),</li>
+<li><em>AcidCitr</em> : la teneur en acide citrique (en g/dm3),</li>
+<li><em>SO2lbr</em> : le dosage du dioxyde de soufre libre (en mg/dm3),</li>
+<li><em>SO2tot</em> : le dosage du dioxyde de soufre total (en mg/dm3),</li>
+<li><em>Densite</em> : la densité (en g/cm3),</li>
+<li><em>Alcool</em> : le degré d’alcool (en % Vol.).</li>
+</ul>
+<p>Dans un premier temps, commencez par charger le jeu de données avec la commande suivante <code>Data = read.table("Data/wine.txt",header=T)</code>.</p>
+<p>Voici les premières lignes du jeu de données :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Qualite Type AcidVol AcidCitr SO2lbr SO2tot Densite Alcool
+1352  medium    1    0.62     0.01      8     46 0.99332   11.8
+5493  medium    0    0.34     0.10     17     63 0.99370    9.2
+5153  medium    0    0.22     0.22     39    110 0.99855    9.0
+5308  medium    0    0.35     0.46     61    183 0.99786    9.0
+3866  medium    0    0.42     0.32     20    167 0.99479   10.6
+694   medium    1    0.48     0.32     21    122 0.99840    9.4</code></pre>
+</div>
+</div>
+<p>Le jeu de données est donc maintenant stocké dans l’objet <em>Data</em> de type <em>data.frame</em> (<code>&gt;class(Data)</code> data.frame).</p>
+<section id="contenu-du-jeu-de-données" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="contenu-du-jeu-de-données"><span class="header-section-number">3.2.1</span> Contenu du jeu de données</h3>
+<p>On peut commencer par regarder les dimensions du jeu de données à étudier à l’aide des commandes <code>dim()</code>, <code>nrow()</code>et <code>ncol()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 600   8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 600</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+</div>
+<p>Ainsi le jeu de données contient 600 individus (correspondant aux 600 lignes) décrits par 8 variables (correspondant aux 8 colonnes). Remarquons que l’on peut obtenir les noms des variables grâce à la commande <code>names(Data)</code>. Plus largement, on peut utiliser la commande <code>attributes()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "Qualite"  "Type"     "AcidVol"  "AcidCitr" "SO2lbr"   "SO2tot"   "Densite" 
+[8] "Alcool"  
+
+$class
+[1] "data.frame"
+
+$row.names
+  [1] "1352" "5493" "5153" "5308" "3866" "694"  "5085" "2280" "5231" "4388"
+ [11] "4172" "4763" "4001" "3244" "4663" "3256" "3444" "3867" "3161" "6420"
+ [21] "1590" "2155" "2258" "209"  "4560" "1981" "2166" "5430" "6496" "346" 
+ [31] "1288" "3615" "1837" "5637" "2520" "3046" "2983" "840"  "3185" "4690"
+ [41] "6347" "728"  "240"  "6318" "2501" "3003" "4537" "4799" "141"  "3664"
+ [51] "5167" "5291" "3383" "2712" "449"  "214"  "3216" "4917" "5005" "3501"
+ [61] "1291" "3137" "998"  "1350" "6336" "492"  "3901" "4878" "5343" "5096"
+ [71] "4516" "1118" "2680" "452"  "3937" "776"  "528"  "3445" "203"  "1175"
+ [81] "5796" "2334" "3564" "1921" "4995" "1070" "5286" "4421" "5630" "273" 
+ [91] "896"  "5267" "742"  "956"  "4435" "414"  "2737" "1496" "455"  "3970"
+[101] "286"  "1535" "3144" "5473" "6308" "5051" "3502" "4286" "1408" "2581"
+[111] "6225" "4614" "3065" "54"   "6300" "2050" "5574" "3368" "2332" "4225"
+[121] "5508" "2830" "5669" "6141" "6395" "5337" "878"  "4190" "5778" "3316"
+[131] "5832" "5672" "1786" "2654" "1199" "5997" "1347" "4785" "5400" "2157"
+[141] "3552" "788"  "2624" "1912" "499"  "2522" "6456" "4425" "618"  "1139"
+[151] "5815" "1191" "1348" "771"  "5530" "858"  "4070" "5460" "4236" "5919"
+[161] "6340" "5170" "3266" "3696" "6310" "6269" "3258" "6313" "362"  "2374"
+[171] "4507" "1575" "3468" "5729" "6469" "510"  "6107" "1178" "4973" "4120"
+[181] "5295" "2076" "3989" "4518" "3184" "1198" "1847" "2285" "6022" "6087"
+[191] "113"  "5667" "3317" "933"  "4658" "1923" "4026" "2244" "226"  "1254"
+[201] "747"  "2809" "1137" "2067" "2455" "6163" "3977" "50"   "3418" "5477"
+[211] "2389" "6243" "65"   "3678" "3117" "4327" "4206" "1169" "4188" "5392"
+[221] "1477" "3063" "6342" "4634" "3862" "1497" "193"  "2273" "3074" "583" 
+[231] "6169" "3865" "5812" "2658" "4152" "753"  "4000" "5504" "1861" "6068"
+[241] "4950" "4654" "1511" "1001" "2386" "1242" "2045" "2743" "1413" "2060"
+[251] "5915" "469"  "5454" "4119" "397"  "1278" "2307" "1279" "4528" "761" 
+[261] "3747" "199"  "802"  "4150" "271"  "5070" "6303" "146"  "3768" "4665"
+[271] "2703" "5349" "1693" "1640" "5547" "354"  "4161" "3230" "1319" "3832"
+[281] "2894" "3282" "5782" "570"  "5111" "6433" "229"  "5419" "2174" "1749"
+[291] "4782" "5163" "6059" "4836" "5635" "6054" "6437" "3347" "684"  "48"  
+[301] "2117" "1224" "96"   "4131" "2726" "2511" "6262" "3086" "1253" "4549"
+[311] "723"  "5287" "3739" "1658" "76"   "1604" "149"  "554"  "349"  "639" 
+[321] "416"  "2966" "378"  "475"  "1212" "5670" "15"   "4986" "324"  "3657"
+[331] "5571" "881"  "322"  "1998" "3795" "5064" "232"  "5447" "2232" "5307"
+[341] "3578" "4645" "6277" "6483" "1028" "5649" "1493" "52"   "4329" "5765"
+[351] "4927" "4871" "5099" "419"  "2019" "3490" "5412" "4310" "2156" "4040"
+[361] "4791" "6205" "1295" "4177" "2216" "6355" "4493" "4428" "3089" "2142"
+[371] "4354" "5650" "2801" "2977" "919"  "1951" "3641" "5697" "6452" "3271"
+[381] "4515" "3665" "4167" "6008" "6094" "605"  "5608" "2942" "2360" "4579"
+[391] "4805" "239"  "612"  "4937" "3692" "4287" "2203" "1547" "5444" "872" 
+[401] "4513" "6280" "5050" "2226" "5135" "5278" "2570" "4509" "2732" "1820"
+[411] "5495" "1882" "789"  "4290" "1249" "3306" "5468" "2342" "2217" "1252"
+[421] "1828" "832"  "4529" "2750" "5511" "4111" "2200" "695"  "611"  "1916"
+[431] "1646" "1774" "1977" "5298" "1007" "3956" "5659" "6"    "1365" "619" 
+[441] "3131" "2941" "2027" "3838" "6039" "5624" "5323" "2730" "1783" "1579"
+[451] "3397" "3685" "5180" "1741" "5219" "5103" "997"  "1451" "2102" "309" 
+[461] "3508" "4429" "2320" "4943" "1236" "5285" "1622" "2865" "254"  "581" 
+[471] "4635" "198"  "5257" "5006" "2363" "922"  "399"  "3948" "2198" "5393"
+[481] "4609" "5299" "2598" "1214" "5875" "3626" "4087" "783"  "1482" "290" 
+[491] "5956" "3011" "2293" "6176" "3871" "5478" "1123" "319"  "2469" "4151"
+[501] "2395" "4073" "2072" "1762" "1775" "3325" "1560" "3769" "5755" "4011"
+[511] "6389" "4958" "3523" "1452" "4576" "5182" "1179" "1059" "6467" "369" 
+[521] "5795" "1836" "1684" "1737" "988"  "5853" "1201" "866"  "110"  "775" 
+[531] "5303" "1938" "1283" "5636" "1474" "3236" "2262" "2881" "892"  "2032"
+[541] "129"  "6375" "1044" "540"  "3219" "3183" "1895" "2631" "1354" "655" 
+[551] "4963" "3040" "4729" "6286" "5823" "4224" "729"  "719"  "5217" "3569"
+[561] "1447" "1394" "4794" "1664" "501"  "3668" "3098" "1080" "2266" "186" 
+[571] "5841" "3375" "1111" "430"  "677"  "3973" "6471" "1021" "3674" "6203"
+[581] "2762" "572"  "5960" "970"  "460"  "4630" "5655" "5365" "2020" "3275"
+[591] "5150" "3265" "3328" "3925" "1265" "768"  "670"  "1156" "2275" "974" </code></pre>
+</div>
+</div>
+<p>La commande <code>str()</code> affiche quand à elle d’autres informations concernant les données. En particulier, on retrouve le type (data.frame) et la dimension (nombres d’observations et de variables) des données. En outre, pour chaque variable, on peut lire son nom, son format (entier, numérique, caractère) ainsi que ses premières valeurs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   600 obs. of  8 variables:
+ $ Qualite : chr  "medium" "medium" "medium" "medium" ...
+ $ Type    : int  1 0 0 0 0 1 0 0 0 0 ...
+ $ AcidVol : num  0.62 0.34 0.22 0.35 0.42 0.48 0.21 0.28 0.3 0.4 ...
+ $ AcidCitr: num  0.01 0.1 0.22 0.46 0.32 0.32 0.32 0.14 0.25 0.42 ...
+ $ SO2lbr  : num  8 17 39 61 20 21 39 64 21 41 ...
+ $ SO2tot  : int  46 63 110 183 167 122 113 159 124 176 ...
+ $ Densite : num  0.993 0.994 0.999 0.998 0.995 ...
+ $ Alcool  : num  11.8 9.2 9 9 10.6 9.4 10.2 10 10.8 9.4 ...</code></pre>
+</div>
+</div>
+<p>On voit ici que les variables sont de différentes natures :</p>
+<ul>
+<li>Les variables <em>Qualite</em> et <em>Type</em> sont des variables qualitatives</li>
+<li>Les autres variables sont quantitatives</li>
+</ul>
+<p>Attention à bien préciser à R les variables qui doivent être considérées comme qualitatives. Ici, on change donc la nature des variables <em>Qualite</em> et <em>Type</em> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Data<span class="sc">$</span>Qualite<span class="ot">=</span><span class="fu">as.factor</span>(Data<span class="sc">$</span>Qualite)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Data<span class="sc">$</span>Type<span class="ot">=</span><span class="fu">factor</span>(Data<span class="sc">$</span>Type,<span class="at">labels=</span><span class="fu">c</span>(<span class="st">"blanc"</span>,<span class="st">"rouge"</span>))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Qualite  Type AcidVol AcidCitr SO2lbr SO2tot Densite Alcool
+1352  medium rouge    0.62     0.01      8     46 0.99332   11.8
+5493  medium blanc    0.34     0.10     17     63 0.99370    9.2
+5153  medium blanc    0.22     0.22     39    110 0.99855    9.0
+5308  medium blanc    0.35     0.46     61    183 0.99786    9.0
+3866  medium blanc    0.42     0.32     20    167 0.99479   10.6
+694   medium rouge    0.48     0.32     21    122 0.99840    9.4</code></pre>
+</div>
+</div>
+<p>On peut obtenir un résumé rapide du jeu de données à l’aide de la fonction <code>summary()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Qualite       Type        AcidVol          AcidCitr          SO2lbr      
+ bad   : 19   blanc:425   Min.   :0.1000   Min.   :0.0000   Min.   :  2.00  
+ good  :110   rouge:175   1st Qu.:0.2400   1st Qu.:0.2400   1st Qu.: 15.75  
+ medium:471               Median :0.3000   Median :0.3000   Median : 27.00  
+                          Mean   :0.3512   Mean   :0.3141   Mean   : 29.41  
+                          3rd Qu.:0.4300   3rd Qu.:0.3900   3rd Qu.: 41.00  
+                          Max.   :1.0400   Max.   :1.0000   Max.   :112.00  
+     SO2tot         Densite           Alcool     
+ Min.   :  7.0   Min.   :0.9875   Min.   : 8.00  
+ 1st Qu.: 68.0   1st Qu.:0.9925   1st Qu.: 9.50  
+ Median :114.5   Median :0.9949   Median :10.40  
+ Mean   :111.2   Mean   :0.9947   Mean   :10.49  
+ 3rd Qu.:154.0   3rd Qu.:0.9970   3rd Qu.:11.30  
+ Max.   :278.0   Max.   :1.0030   Max.   :14.00  </code></pre>
+</div>
+</div>
+</section>
+<section id="statistiques-descriptives-unidimensionnelles" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="statistiques-descriptives-unidimensionnelles"><span class="header-section-number">3.2.2</span> Statistiques descriptives unidimensionnelles</h3>
+<section id="variable-qualitative" class="level4" data-number="3.2.2.1">
+<h4 data-number="3.2.2.1" class="anchored" data-anchor-id="variable-qualitative"><span class="header-section-number">3.2.2.1</span> Variable qualitative</h4>
+<p>On considère ici une variable qualitative <span class="math inline">\(X\)</span> dont on observe <span class="math inline">\(n\)</span> réalisations <span class="math inline">\(\underline{x}=(x_1,x_2,\ldots,x_n)\)</span>. Cette variable prend <span class="math inline">\(K\)</span> modalités <span class="math inline">\(m_1,\ldots,m_K\)</span>. Si les modalités n’ont pas d’ordre naturel, on parle de variable qualitative nominale (ex. <em>Type</em>), sinon c’est une variable qualitative ordinale (ex. <em>Qualite</em>).</p>
+<p>La variable <em>Type</em> contient <span class="math inline">\(K=\)</span> 2 modalités qui sont blanc, rouge.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(Data<span class="sc">$</span>Type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "blanc" "rouge"</code></pre>
+</div>
+</div>
+<p>On récupère l’effectif <span class="math inline">\(n_k=\underset{i=1}{\stackrel{n}{\sum}} \mathbb{1}_{x_i=m_k}\)</span> pour chaque modalité <span class="math inline">\(m_k\)</span> avec <code>summary()</code>ou <code>table()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Data<span class="sc">$</span>Type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>blanc rouge 
+  425   175 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>EffType <span class="ot">=</span> <span class="fu">as.vector</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Type))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>EffType</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 425 175</code></pre>
+</div>
+</div>
+<p>On utilise aussi les fréquences <span class="math inline">\(f_k=\frac{n_k}{n}\)</span> donc <span class="math inline">\(\underset{k=1}{\stackrel{K}{\sum}}f_k=1\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Freq <span class="ot">=</span> EffType<span class="sc">/</span><span class="fu">length</span>(Data<span class="sc">$</span>Type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Description de la variable Type</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">modalite</th>
+<th style="text-align: right;">Eff</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">blanc</td>
+<td style="text-align: right;">425</td>
+<td style="text-align: right;">0.708</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rouge</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">0.292</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Pour une variable qualitative ordinale, on utilise également les effectifs cumulés <span class="math inline">\(N_k=\underset{\ell=1}{\stackrel{k}{\sum}} n_\ell\)</span> et les fréquences cumulées <span class="math inline">\(F_k=\underset{\ell=1}{\stackrel{k}{\sum}} f_\ell\)</span>.</p>
+<section id="visualisation" class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="visualisation">Visualisation</h5>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<p>Pour la variable <em>Type</em> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">=</span><span class="fu">ggplot</span>(Data) <span class="sc">+</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> Type))<span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Effectifs"</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">=</span><span class="fu">ggplot</span>(Data) <span class="sc">+</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> Type, <span class="at">y =</span> ..prop.., <span class="at">group =</span> <span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Frequences"</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">levels</span>(Data<span class="sc">$</span>Type),</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">as.vector</span>(Freq)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>g3 <span class="ot">=</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span>value, <span class="at">fill=</span>type))<span class="sc">+</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">stat =</span> <span class="st">"identity"</span>)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>g4 <span class="ot">=</span> g3 <span class="sc">+</span> <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start=</span><span class="dv">0</span>)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(g1,g2,g3,g4,<span class="at">nrow=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Pour la variable Qualité :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>Data<span class="sc">$</span>Qualite_rec <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(Data<span class="sc">$</span>Qualite,<span class="st">"bad"</span>,<span class="st">"medium"</span>,<span class="st">"good"</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">Qualite =</span> <span class="fu">levels</span>(Data<span class="sc">$</span>Qualite_rec), </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">value =</span> <span class="fu">table</span>(Data<span class="sc">$</span>Qualite_rec), </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">valuecumul=</span><span class="dv">100</span><span class="sc">*</span><span class="fu">cumsum</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Qualite_rec))) </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>   ) </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Qualite<span class="ot">&lt;-</span><span class="fu">fct_relevel</span>(df<span class="sc">$</span>Qualite,<span class="st">"bad"</span>,<span class="st">"medium"</span>,<span class="st">"good"</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span>df<span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">freq=</span>value.Freq<span class="sc">/</span><span class="fu">nrow</span>(Data))</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Data) <span class="sc">+</span> </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> Qualite_rec))<span class="sc">+</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Effectifs"</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Data) <span class="sc">+</span>  </span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> Qualite_rec, <span class="at">y =</span> ..prop.., <span class="at">group =</span> <span class="dv">1</span>))<span class="sc">+</span> </span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggtitle</span>(<span class="st">"Frequences"</span>) </span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>g3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Qualite, <span class="at">y =</span> valuecumul)) <span class="sc">+</span>  </span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)<span class="sc">+</span> </span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggtitle</span>(<span class="st">"Fréquences cumulées"</span>) </span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>g4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> freq, <span class="at">fill =</span> Qualite)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">stat =</span> <span class="st">"identity"</span>)<span class="sc">+</span> <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start =</span> <span class="dv">0</span>)</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(g1,g2,g3,g4,<span class="at">ncol=</span><span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<p>Pour une variable qualitative, on utilise la représentation par camembert (pie) ou diagramme en bâton (barplot)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Type))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Type),<span class="at">main=</span><span class="st">"Effectifs"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Type)<span class="sc">/</span><span class="fu">nrow</span>(Data),<span class="at">main=</span><span class="st">"Frequences"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Pour une variable qualitative ordinale, on peut également tracer les fréquences cumulées :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>Data<span class="sc">$</span>Qualite_rec <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(Data<span class="sc">$</span>Qualite,<span class="st">"bad"</span>,<span class="st">"medium"</span>,<span class="st">"good"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Qualite_rec))</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Qualite_rec)<span class="sc">/</span><span class="fu">nrow</span>(Data),<span class="at">main=</span><span class="st">"Frequences"</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">cumsum</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Qualite_rec))<span class="sc">/</span><span class="fu">nrow</span>(Data),<span class="at">main=</span><span class="st">"Freq. cumulées"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Data<span class="ot">&lt;-</span>Data[,<span class="sc">-</span><span class="dv">9</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!-- https://sebastiansauer.github.io/percentage_plot_ggplot2_V2/  -->
+<!--    ----------------------------------------------------------  -->
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="variable-quantitative" class="level4" data-number="3.2.2.2">
+<h4 data-number="3.2.2.2" class="anchored" data-anchor-id="variable-quantitative"><span class="header-section-number">3.2.2.2</span> Variable quantitative</h4>
+<p>Nous allons ici nous intéresser à l’étude d’une variable quantitative <span class="math inline">\(X\)</span> dont on a <span class="math inline">\(n\)</span> observations <span class="math inline">\(\underline{x}=(x_1,\ldots,x_n)\)</span>. On va illustrer cette section avec la variable <em>Alcool</em>.</p>
+</section>
+<section id="secindicesstat" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="secindicesstat">Indices statistiques</h4>
+<p>Nous rappelons les principaux indicateurs statistiques que l’on peut évaluer pour une série de mesures <span class="math inline">\(\underline{x}\)</span>: la moyenne, la médiane, la variance, l’écart-type ….</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Mean/var/sd</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">min/max/range</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">médiane / quartiles / quantiles</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<p>La moyenne de <span class="math inline">\(\underline{x}\)</span> : <span class="math inline">\(\bar{x} = \frac{1}{n} \underset{i=1}{\stackrel{n}{\sum}} x_i\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(Data<span class="sc">$</span>Alcool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10.48592</code></pre>
+</div>
+</div>
+<ul>
+<li><p>La variance <span class="math inline">\(s_x^2 = \frac{1}{n}\underset{i=1}{\stackrel{n}{\sum}} (x_i - \bar{x})^2\)</span></p></li>
+<li><p>la variance corrigée <span class="math inline">\(var(\underline{x})=\frac{1}{n-1}\underset{i=1}{\stackrel{n}{\sum}} (x_i - \bar{x})^2\)</span></p></li>
+<li><p>l’écart-type corrigé <span class="math inline">\(\sqrt{var(\underline{x})}\)</span></p></li>
+</ul>
+<p>Attention les fonctions <code>var()</code> et <code>sd()</code> renvoient les valeurs corrigées de la variance et de l’écart-type respectivement.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(Data<span class="sc">$</span>Alcool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.316059</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(Data<span class="sc">$</span>Alcool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.147196</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<p>La commande <code>range()</code> renvoie respectivement le minimum et le maximum. On peut aussi utiliser <code>min()</code>et <code>max()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(Data<span class="sc">$</span>Alcool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  8 14</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(Data<span class="sc">$</span>Alcool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(Data<span class="sc">$</span>Alcool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14</code></pre>
+</div>
+</div>
+<p>On peut alors récupérer l’étendue (<span class="math inline">\(max(\underline{x}) - min(\underline{x})\)</span> ) avec le code suivant :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">range</span>(Data<span class="sc">$</span>Alcool))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<p>La médiane est une valeur qui divise l’échantillon en deux sous-échantillons de même cardinal : <span class="math inline">\(\underset{i=1}{\stackrel{n}{\sum}} \mathbb{1}_{x_i\geq m} \geq \frac{n}{2} \textrm{ et } \underset{i=1}{\stackrel{n}{\sum}} \mathbb{1}_{x_i\leq m} \geq \frac{n}{2}\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(Data<span class="sc">$</span>Alcool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10.4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(Data<span class="sc">$</span>Alcool)[<span class="dv">296</span><span class="sc">:</span><span class="dv">305</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 10.3 10.3 10.3 10.3 10.4 10.4 10.4 10.4 10.4 10.4</code></pre>
+</div>
+</div>
+<p>La médiane est le deuxième des trois quartiles :</p>
+<ul>
+<li>le premier quartile <span class="math inline">\(q_{0.25}\)</span> est une valeur qui sépare les 25<span class="math inline">\(\%\)</span> des valeurs inférieures de l’échantillon du reste</li>
+<li>le deuxième quartile <span class="math inline">\(q_{0.5}\)</span> est la médiane</li>
+<li>le troisième quartile <span class="math inline">\(q_{O.75}\)</span> est une valeur qui sépare les 25% des valeurs supérieures de l’échantillon du reste. On retrouve ces valeurs dans la représentation par boxplot (voir la sous-section <a href="#secgraph">boxplot</a>).</li>
+</ul>
+<p>Les quartiles sont des cas particuliers de la notion de quantile. Le <span class="math inline">\(\alpha\)</span>-quantile empirique est défini par <span class="math inline">\(q_{\alpha} = x_{(i)}\)</span> avec <span class="math inline">\(\alpha\in]\frac{i-1}{n}, \frac{i}{n}]\)</span> où <span class="math inline">\(x_{(1)}\leq x_{(2)}\leq \ldots \leq x_{(n)}\)</span> sont les valeurs ordonnées de la série statistique.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(Data<span class="sc">$</span>Alcool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  0%  25%  50%  75% 100% 
+ 8.0  9.5 10.4 11.3 14.0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(Data<span class="sc">$</span>Alcool,<span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> 90% 
+12.1 </code></pre>
+</div>
+</div>
+<p>Pour calculer l’écart interquantile, il suffit de faire la différence entre les troisième et premier quantiles, à savoir</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>q.Alc <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="at">x =</span> Data<span class="sc">$</span>Alcool, <span class="at">probs=</span><span class="fu">c</span>(.<span class="dv">25</span>,.<span class="dv">75</span>), <span class="at">names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(q.Alc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.8</code></pre>
+</div>
+</div>
+<p>Les valeurs d’adjacence (cf définitions dans la sous-section <a href="#secgraph">boxplot</a>) sont obtenues de la manière suivante :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span>q.Alc <span class="sc">+</span> <span class="fu">diff</span>(q.Alc) <span class="sc">*</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.5</span>,<span class="fl">1.5</span>) ; L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  6.8 14.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># valeur adjacente inférieure :</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(Data<span class="sc">$</span>Alcool[Data<span class="sc">$</span>Alcool<span class="sc">&gt;=</span>L[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># valeur adjacente supérieure :</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(Data<span class="sc">$</span>Alcool[Data<span class="sc">$</span>Alcool<span class="sc">&lt;=</span>L[<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14</code></pre>
+</div>
+</div>
+<p>Par ailleurs, toutes ces informations sont stockées dans la commande <code>summary()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Data<span class="sc">$</span>Alcool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   8.00    9.50   10.40   10.49   11.30   14.00 </code></pre>
+</div>
+</div>
+<p>où sont affichés respectivement le minimum, le premier quartile, la médiane, la moyenne, le troisième quartile et le maximum.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="secgraph" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="secgraph">Représentations graphiques</h4>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">Histogramme</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">Fonction de répartition empirique</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-3" role="tab" aria-controls="tabset-10-3" aria-selected="false">Boîte à moustaches / boxplot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<p>L’histogramme est une représentation graphique qui permet de visualiser la répartition d’une variable quantitative. Les valeurs sont regroupées en intervalles <span class="math inline">\(]a_k,a_{k+1}[\)</span> et la hauteur associée est <span class="math inline">\(h_k=\frac{f_k}{a_{k+1} - a_k}\)</span>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>g1<span class="ot">=</span><span class="fu">ggplot</span>(Data, <span class="fu">aes</span>(<span class="at">x=</span>Alcool)) <span class="sc">+</span> </span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="st">"white"</span>,<span class="at">binwidth =</span> <span class="fl">0.5</span>)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>g2<span class="ot">=</span><span class="fu">ggplot</span>(Data, <span class="fu">aes</span>(<span class="at">x=</span>Alcool)) <span class="sc">+</span> </span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..),<span class="at">color=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="st">"white"</span>,<span class="at">binwidth =</span> <span class="fl">0.5</span>)</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(g1,g2,<span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Data, <span class="fu">aes</span>(<span class="at">x=</span>Alcool)) <span class="sc">+</span> </span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..), <span class="at">colour=</span><span class="st">"black"</span>, <span class="at">fill=</span><span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">2</span>, <span class="at">fill=</span><span class="st">"red"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Data, <span class="fu">aes</span>(<span class="at">x=</span>Alcool, <span class="at">color=</span>Type)) <span class="sc">+</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..),<span class="at">fill=</span><span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(Data<span class="sc">$</span>Alcool,<span class="at">main=</span><span class="st">"Histo. des effectifs"</span>)</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(Data<span class="sc">$</span>Alcool,<span class="at">freq=</span><span class="cn">FALSE</span>,<span class="at">main=</span><span class="st">"Histo. des fréquences"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/hist-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>L’option <code>breaks="Sturges"</code> donne le choix par défaut de R pour le nombre de classes. D’autres options sont possibles (soit on précise les classes elles mêmes dans un vecteur, soit on précise un nombre arbitraire de classes, soit on lui précise l’algorithme pour calculer le nombre de classes parmi <code>"Sturges"</code>, <code>"Scott"</code> ou <code>"FD"</code> pour Freedman-Diaconis). On peut récupérer les informations de construction de l’histogramme en stockant le résultat de <code>hist()</code> dans une variable :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="fu">hist</span>(Data<span class="sc">$</span>Alcool,<span class="at">plot=</span><span class="cn">FALSE</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(H)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "breaks"   "counts"   "density"  "mids"     "xname"    "equidist"
+
+$class
+[1] "histogram"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>H<span class="sc">$</span>breaks <span class="co"># les (K+1) bordures des classes [a_k,a_{k+1}]</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>H<span class="sc">$</span>counts <span class="co"># le nombre de points dans chaque classe</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>H<span class="sc">$</span>density <span class="co"># la hauteur des K classes</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>H<span class="sc">$</span>mids <span class="co"># le milieu des K classes</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>H<span class="sc">$</span>xname <span class="co"># le nom de la variable</span></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>H<span class="sc">$</span>equidist <span class="co"># découpage régulier </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<p>La fonction de répartition empirique est la fonction en escalier définie par <span class="math inline">\(t\in\mathbb{R}\mapsto F_n(t) = \frac{1}{n} \underset{i=1}{\stackrel{n}{\sum}} \mathbb{1}_{x_i\leq t}\)</span></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Data, <span class="fu">aes</span>(Alcool)) <span class="sc">+</span> </span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>(<span class="at">geom =</span> <span class="st">"step"</span>)<span class="sc">+</span></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Variable Alcool"</span>) <span class="sc">+</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">" "</span>)<span class="sc">+</span></span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Fonction de répartition empirique"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(Data<span class="sc">$</span>Alcool), <span class="at">xlab =</span> <span class="st">'Variable Alcool'</span>, <span class="at">ylab =</span> <span class="st">''</span>, </span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="at">main =</span> <span class="st">'Fonction de répartition empirique'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
+<p>La boîte à moustaches est un graphique qui résume la série statistique à partir de ses valeurs extrêmes et ses quartiles. En effet, on retrouve sur cette représentation</p>
+<ul>
+<li>les <a href="#secindicesstat">quartiles</a></li>
+<li>la valeur adjacente supérieure <span class="math inline">\(v+\)</span>, qui est la plus grande valeur de l’échantillon inférieure ou égale à <span class="math inline">\(L+ = q_{0.75} + 1.5 (q _{0.75} − q_{0.25})\)</span></li>
+<li>la valeur adjacente inférieure <span class="math inline">\(v−\)</span>, qui est la plus petite valeur de l’échantillon supérieure ou égale à <span class="math inline">\(L− = q_{0.25} − 1.5 (q_{0.75} − q_{0.25})\)</span></li>
+<li>les valeurs extrêmes (outliers) qui sont les valeurs de l’échantillon n’appartenant pas à l’intervalle <span class="math inline">\([v−, v+]\)</span>.</li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<p>Représentation des boxplot avec ggplot2 :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="fu">gather</span>(<span class="at">key=</span><span class="st">"variable"</span>,<span class="at">value=</span><span class="st">"valeur"</span>,Data[,<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)]))<span class="sc">+</span> </span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>variable, <span class="at">y=</span>valeur))</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="fu">gather</span>(<span class="at">key=</span><span class="st">"variable"</span>,<span class="at">value=</span><span class="st">"valeur"</span>,Data[,<span class="fu">c</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>)]))<span class="sc">+</span> </span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>variable, <span class="at">y=</span>valeur))</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(g1,g2,<span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Représentation des violin plots :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="fu">gather</span>(<span class="at">key=</span><span class="st">"variable"</span>,<span class="at">value=</span><span class="st">"valeur"</span>,Data[,<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)]))<span class="sc">+</span> </span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x=</span>variable, <span class="at">y=</span>valeur))</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="fu">gather</span>(<span class="at">key=</span><span class="st">"variable"</span>,<span class="at">value=</span><span class="st">"valeur"</span>,Data[,<span class="fu">c</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>)]))<span class="sc">+</span> </span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x=</span>variable, <span class="at">y=</span>valeur))</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(g1,g2,<span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<p>Voici les boxplots pour les variables quantitatives de notre exemple.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Data[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/boxplot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Nous allons pour la suite nous concentrer sur la variable <em>SO2lbr</em>. En plus du graphique, on peut récupérer de la fonction <code>boxplot()</code> différentes informations :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">boxplot</span>(Data<span class="sc">$</span>SO2lbr,<span class="at">horizontal=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/boxplotNit-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$names
+[1] "stats" "n"     "conf"  "out"   "group" "names"</code></pre>
+</div>
+</div>
+<p>Dans <code>B$stats</code>, on retrouve les quartiles, la médiane et les valeurs adjacentes :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">$</span>stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]  2.0
+[2,] 15.5
+[3,] 27.0
+[4,] 41.0
+[5,] 73.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(Data<span class="sc">$</span>SO2lbr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 27</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="at">x =</span> Data<span class="sc">$</span>SO2lbr, <span class="at">probs=</span><span class="fu">c</span>(.<span class="dv">25</span>,.<span class="dv">75</span>), <span class="at">names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>q</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15.75 41.00</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>L<span class="ot">=</span>q <span class="sc">+</span> <span class="fu">diff</span>(q) <span class="sc">*</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.5</span>,<span class="fl">1.5</span>) </span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(Data<span class="sc">$</span>SO2lbr[Data<span class="sc">$</span>SO2lbr<span class="sc">&gt;=</span>L[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(Data<span class="sc">$</span>SO2lbr[Data<span class="sc">$</span>SO2lbr<span class="sc">&lt;=</span>L[<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 73.5</code></pre>
+</div>
+</div>
+<p><code>B$out</code> renvoie toutes les valeurs aberrantes (en dehors des barres inférieure et supérieure c’est à dire en dehors de l’intervalle <span class="math inline">\([v-,v+]\)</span>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">$</span>out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  89.0 105.0  85.0 112.0  79.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>Data<span class="sc">$</span>SO2lbr[<span class="fu">which</span>(Data<span class="sc">$</span>SO2lbr<span class="sc">&lt;</span>B<span class="sc">$</span>stats[<span class="dv">1</span>] <span class="sc">|</span> Data<span class="sc">$</span>SO2lbr<span class="sc">&gt;</span>B<span class="sc">$</span>stats[<span class="dv">5</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  89.0 105.0  85.0 112.0  79.5</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="statistiques-descriptives-bidimensionnelles" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="statistiques-descriptives-bidimensionnelles"><span class="header-section-number">3.2.3</span> Statistiques descriptives bidimensionnelles</h3>
+<section id="entre-2-variables-quantitatives" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="entre-2-variables-quantitatives">Entre 2 variables quantitatives</h4>
+<p>Supposons dans cette partie que X et Y sont deux variables quantitatives et on observe une série de <span class="math inline">\(n\)</span> valeurs pour chacune : <span class="math inline">\(\underline{x}=(x_1,\ldots,x_n)\)</span> et <span class="math inline">\(\underline{y}=(y_1,\ldots,y_n)\)</span>.</p>
+<p>On peut tout d’abord représenter le nuage de points de coordonnées <span class="math inline">\((x_i,y_i)\)</span> :</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Data,<span class="fu">aes</span>(<span class="at">x=</span>Alcool,<span class="at">y=</span>Densite))<span class="sc">+</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Data<span class="sc">$</span>Alcool,Data<span class="sc">$</span>Densite,<span class="at">pch=</span><span class="dv">20</span>,<span class="at">xlab=</span><span class="st">"Alcool"</span>,<span class="at">ylab=</span><span class="st">"Densite"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="corrélation" class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="corrélation">Corrélation</h5>
+<p>On peut calculer la covariance (généralisaton bidimensionnelle de la variance) entre ces deux séries de mesure à l’aide de la commande <code>cov()</code>: <span class="math display">\[
+Cov(\underline{x},\underline{y}) = \frac{1}{n} \underset{i=1}{\stackrel{n}{\sum}} (x_i-\bar{x}) (y_i -\bar{y}).
+\]</span> Mais la covariance dépendant des unités de mesure des deux variables considérées, on calcule plutôt la corrélation linéaire (renormalisation de la covariance par les écarts-type) qui appartient à l’intervalle <span class="math inline">\([-1,1]\)</span> à l’aide de <code>cor()</code>: <span class="math display">\[
+cor(\underline{x},\underline{y}) = \frac{Cov(\underline{x},\underline{y})}{\sqrt{s_x^2\ \ s_y^2}}
+\]</span></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true"><code>corrplot()</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false"><code>ggcorrplot()</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<p>A l’aide de la fonction <code>corrplot()</code> (issue du package du même nom) on représente ici la matrice des corrélations entre les variables quantitatives de notre jeu de données:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(<span class="fu">cor</span>(Data[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)]),<span class="at">method=</span><span class="st">"ellipse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(Data[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)]),<span class="at">method =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(Data[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)]),<span class="at">hc.order =</span> <span class="cn">TRUE</span>, <span class="at">type =</span> <span class="st">"lower"</span>,</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">lab =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="régression-linéaire" class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="régression-linéaire">Régression linéaire</h5>
+<p>Le coefficient de corrélation linéaire entre les variables <em>Densité</em> et <em>Alcool</em> vaut -0.68. On peut vérifier que le nuage de points de ces deux variables s’aligner sur une droite de pente négative :</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false">plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Data,<span class="fu">aes</span>(<span class="at">x=</span>Alcool,<span class="at">y=</span>Densite))<span class="sc">+</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Densite <span class="sc">~</span> Alcool, <span class="at">data=</span>Data,<span class="at">pch=</span><span class="dv">20</span>)</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(Densite<span class="sc">~</span>Alcool,<span class="at">data=</span>Data),<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="entre-une-variable-quantitative-et-une-variable-qualitative" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="entre-une-variable-quantitative-et-une-variable-qualitative">Entre une variable quantitative et une variable qualitative</h4>
+<p>Supposons dans cette partie que <span class="math inline">\(X\)</span> est une variable qualitative prenant <span class="math inline">\(J\)</span> modalités <span class="math inline">\(m_1, \ldots, m_J\)</span> et <span class="math inline">\(Y\)</span> une variable quantitative. On observe une série de <span class="math inline">\(n\)</span> valeurs pour chacune : <span class="math inline">\(\underline{x}=(x_1,\ldots,x_n)\)</span> et <span class="math inline">\(\underline{y}=(y_1,\ldots,y_n)\)</span>.</p>
+<p>On note <span class="math inline">\(C_j=\{i\in\{1,\ldots,n\}; x_i=m_j\}\)</span> l’ensemble des individus prenant la modalité <span class="math inline">\(m_j\)</span> et <span class="math inline">\(n_j\)</span> son cardinal.</p>
+<p>La moyenne de <span class="math inline">\(\underline{y}\)</span> peut alors se décomposer en une moyenne pondérée des moyennes de <span class="math inline">\(y\)</span> conditionnellement aux modalités de <span class="math inline">\(X\)</span> : <span class="math display">\[
+\bar{y} = \frac{1}{n} \sum_{j=1}^J n_j\ \bar{y}_{[j]} \textrm{   avec   } \bar{y}_{[j]} = \frac{1}{n_j} \sum_{i\in C_j} y_i
+\]</span> De même la variance se décompose en <span class="math inline">\(s_y^2 = \underbrace{s_{y,E}^2}_{\textrm{variance inter-classe}} + \underbrace{s_{y,R}^2}_{\textrm{variance intra-classe}}\)</span> avec</p>
+<p><span class="math display">\[
+s_{y,E}^2 = \frac{1}{n} \sum_{j=1}^J n_j\ (\bar{y}_{[j]} - \bar{y})^2
+\]</span> et <span class="math display">\[
+s_{y,R}^2 = \frac{1}{n} \sum_{j=1}^J n_j\ s_{y,[j]}^2 \textrm{ avec } s^2_{y,[j]} = \frac{1}{n_j}\sum_{i\in C_j} (y_i - \bar{y}_{[j]})^2
+\]</span> On peut alors définir le <em>rapport de corrélation</em> <span class="math display">\[
+\rho_{y|x} = \sqrt{\frac{s_{y,E}^2}{s_{y}^2}} = \sqrt{1 - \frac{s_{y,R}^2}{s_{y}^2}}\in[0,1].
+\]</span> Plus <span class="math inline">\(\rho_{y|x}\)</span> est proche de <span class="math inline">\(0\)</span>, plus <span class="math inline">\(s_{y,E}^2\)</span> est proche de 0 et donc moins la variable qualitative <span class="math inline">\(X\)</span> a d’influence sur la variable quantitative <span class="math inline">\(Y\)</span>.</p>
+<p>Graphiquement, on peut représenter la distribution de la variable quantitative conditionnellement aux modalités de la variable qualitative pour visualiser la liaison potentielle entre les deux variables.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false">plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>g1<span class="ot">=</span><span class="fu">ggplot</span>(Data,<span class="fu">aes</span>(<span class="at">x=</span>Qualite,<span class="at">y=</span>Alcool))<span class="sc">+</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>g2<span class="ot">=</span><span class="fu">ggplot</span>(Data,<span class="fu">aes</span>(<span class="at">x=</span>Qualite,<span class="at">y=</span>Alcool))<span class="sc">+</span></span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>()</span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a>g3<span class="ot">=</span><span class="fu">ggplot</span>(Data,<span class="fu">aes</span>(<span class="at">x=</span>Alcool,<span class="at">fill=</span>Qualite))<span class="sc">+</span></span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span>
+<span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(g1,g2,g3,<span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Alcool<span class="sc">~</span>Qualite,<span class="at">data=</span>Data)</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Alcool<span class="sc">~</span>Type,<span class="at">data=</span>Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="entre-deux-variables-qualitatives" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="entre-deux-variables-qualitatives">Entre deux variables qualitatives</h4>
+<p>Supposons dans cette partie que <span class="math inline">\(X\)</span> est une variable qualitative prenant <span class="math inline">\(J\)</span> modalités <span class="math inline">\(m_1,\ldots,m_J\)</span> et <span class="math inline">\(Y\)</span> est une vraiable qualitative prenant <span class="math inline">\(K\)</span> modalités <span class="math inline">\(\ell_1,\ldots,\ell_K\)</span>. On observe une série de <span class="math inline">\(n\)</span> valeurs pour chacune : <span class="math inline">\(\underline{x}=(x_1,\ldots,x_n)\)</span> et <span class="math inline">\(\underline{y}=(y_1,\ldots,y_n)\)</span>. Pour étudier l’influence de deux variables qualitatives entre elles, on se base sur la table de contingence qui est l’ensemble des effectifs conjoints <span class="math display">\[
+n_{j,k} = \sum_{i=1}^n \mathrm{1}_{x_i = m_j\ \cap\ y_i=\ell_k},\ \ \forall j\in\{1,\ldots,J\},\ \forall k\in\{1,\ldots,K\}
+\]</span> On définit les effectifs marginaux par <span class="math display">\[
+n_{j,.}=\sum_{k=1}^K n_{j,k}\ \ \ \textrm{   et   } \ \ \ n_{.,k}=\sum_{j=1}^J n_{j,k}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>table.cont <span class="ot">=</span> <span class="fu">table</span>(Data<span class="sc">$</span>Qualite,Data<span class="sc">$</span>Type)</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>table.cont</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        
+         blanc rouge
+  bad       17     2
+  good      89    21
+  medium   319   152</code></pre>
+</div>
+</div>
+<p>Graphiquement, on peut représenter un mosaicplot qui correspond à la représentation des profils-lignes <span class="math display">\[
+\left(\frac{n_{j,1}}{n_{j,.}},\ldots,\frac{n_{j,K}}{n_{j,.}}\right)\in [0,1]^K
+\]</span> ou des profils-colonnes</p>
+<p><span class="math display">\[
+\left(\frac{n_{1,k}}{n_{.,k}},\ldots,\frac{n_{J,k}}{n_{.,k}}\right)\in [0,1]^J
+\]</span></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true">ggplot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false">plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmosaic)</span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Data) <span class="sc">+</span></span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_mosaic</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">product</span>(Type, Qualite), <span class="at">fill=</span>Qualite), <span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">xlab</span>(<span class="st">"Qualite"</span>)<span class="sc">+</span></span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ylab</span>(<span class="st">"Type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Data) <span class="sc">+</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_mosaic</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">product</span>(Qualite, Type)), <span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">xlab</span>(<span class="st">"Type"</span>)<span class="sc">+</span></span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ylab</span>(<span class="st">"Qualite"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-53-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Qualite,Data<span class="sc">$</span>Type))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(<span class="fu">table</span>(Data<span class="sc">$</span>Type,Data<span class="sc">$</span>Qualite))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Part3-StatR_files/figure-html/unnamed-chunk-54-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="pour-aller-plus-loin" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="pour-aller-plus-loin"><span class="header-section-number">3.3</span> Pour aller plus loin</h2>
+<p>Dans la suite de votre cursus modIA, vous aborderez la mise en pratique d’algorithmes en R et python sur les thématiques suivantes :</p>
+<ul>
+<li>les statistiques descriptives multidimensionnelles dont l’ACP</li>
+<li>le modèle linéaire et modèle linéaire généralisé</li>
+<li>l’apprentissage supervisé</li>
+<li>l’apprentissage non supervisé</li>
+<li>…</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Part2-InitR.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Initiation au langage et objets de R</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Part4-Ravance.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pour aller plus loin avec R et RStudio</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
